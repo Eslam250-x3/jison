@@ -475,6 +475,43 @@
                 this.showMessage('تم مسح كل شيء', 'success');
             }
             
+            copyJSON() {
+                const jsonText = JSON.stringify(this.questions, null, 2);
+                if (!jsonText || jsonText === '[]') {
+                    this.showMessage('لا يوجد شيء لنسخه', 'warning');
+                    return;
+                }
+                const textArea = document.createElement('textarea');
+                textArea.value = jsonText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    this.showMessage('تم نسخ JSON إلى الحافظة', 'success');
+                } catch (err) {
+                    this.showMessage('فشل النسخ', 'error');
+                }
+                document.body.removeChild(textArea);
+            }
+
+            downloadJSON() {
+                const jsonText = JSON.stringify(this.questions, null, 2);
+                 if (!jsonText || jsonText === '[]') {
+                    this.showMessage('لا يوجد شيء لتحميله', 'warning');
+                    return;
+                }
+                const blob = new Blob([jsonText], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'questions.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                this.showMessage('بدء تحميل الملف...', 'success');
+            }
+
             // ===== API Call =====
             async callGeminiAPI(prompt, apiKey) {
                 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
