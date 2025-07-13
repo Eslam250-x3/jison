@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول الأسئلة الذكي المتطور - AI Enhanced</title>
+    <title>محول الأسئلة الذكي المتطور - النسخة المدمجة</title>
     <style>
+        /* --- Basic Setup --- */
         * {
             margin: 0;
             padding: 0;
@@ -17,9 +18,14 @@
             min-height: 100vh;
             padding: 20px;
             color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* --- Main Container --- */
         .container {
+            width: 100%;
             max-width: 1600px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.98);
@@ -28,6 +34,7 @@
             overflow: hidden;
         }
 
+        /* --- Header --- */
         .header {
             background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white;
@@ -79,6 +86,7 @@
             backdrop-filter: blur(10px);
         }
 
+        /* --- Content Layout --- */
         .content {
             padding: 40px;
             display: grid;
@@ -110,7 +118,8 @@
             align-items: center;
             gap: 10px;
         }
-
+        
+        /* --- Input & Controls --- */
         .input-section textarea {
             width: 100%;
             min-height: 350px;
@@ -149,31 +158,6 @@
             border-color: #7c3aed;
             box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
         }
-
-        .ai-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: #4f46e5;
-            transform: translateY(-2px);
-        }
-
-        .feature-card .icon { font-size: 2em; margin-bottom: 10px; }
-        .feature-card h4 { color: #4f46e5; margin-bottom: 5px; }
-        .feature-card p { font-size: 0.9em; color: #6b7280; }
 
         .controls {
             display: flex;
@@ -225,7 +209,7 @@
         .btn-ai { background: linear-gradient(135deg, #ec4899 0%, #d946ef 100%); color: white; }
         .btn-ai:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3); }
 
-
+        /* --- JSON Output --- */
         .json-output {
             background: #1e293b;
             color: #e2e8f0;
@@ -240,6 +224,7 @@
             overflow-y: auto;
             border: 1px solid #334155;
             flex-grow: 1;
+            margin-top: 15px;
         }
 
         .json-output .key { color: #60a5fa; }
@@ -247,9 +232,10 @@
         .json-output .number { color: #fbbf24; }
         .json-output .boolean { color: #f87171; }
         .json-output .null { color: #a78bfa; }
-
+        
+        /* --- Preview & Analysis --- */
         .analysis-section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
-        .analysis-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
+        .analysis-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f3f4f6; font-size: 0.9em; }
         .analysis-item:last-child { border-bottom: none; }
         .confidence-bar { width: 100px; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
         .confidence-fill { height: 100%; background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981); border-radius: 4px; transition: width 0.5s ease-in-out; }
@@ -257,11 +243,13 @@
         #questionsPreview { flex-grow: 1; overflow-y: auto; max-height: 70vh; }
         .question-preview { background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); animation: fadeIn 0.5s ease; position: relative; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         .question-actions { position: absolute; top: 10px; left: 10px; display: none; gap: 8px; z-index: 10; }
         .question-preview:hover .question-actions { display: flex; }
         .action-btn { background: rgba(249, 250, 251, 0.8); border: 1px solid #d1d5db; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; backdrop-filter: blur(2px); }
         .action-btn:hover { background: #4f46e5; border-color: #4f46e5; color: white; transform: scale(1.1); }
         .action-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #e5e7eb; }
+        
         .question-preview h4 { color: #374151; margin-bottom: 10px; font-size: 1.1em; line-height: 1.5; }
         .question-type-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
         .type-multiple_choice { background: #dbeafe; color: #1e40af; }
@@ -271,17 +259,19 @@
         .type-matching { background: #e0e7ff; color: #3730a3; }
         .type-short_answer { background: #e5e7eb; color: #374151; }
         .type-unknown { background: #fee2e2; color: #991b1b; }
+        
         .choice-item { padding: 8px 15px; margin: 5px 0; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; cursor: pointer; transition: all 0.2s ease; }
         .choice-item:hover { background: #f3f4f6; border-color: #4f46e5; }
         .choice-item.correct { background: #dcfce7; border-color: #16a34a; color: #15803d; font-weight: bold; }
         .choice-item.correct::before { content: '✔ '; color: #15803d; }
-
+        
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .stat-card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border: 1px solid #e5e7eb; transition: all 0.3s ease; }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); }
         .stat-card h4 { color: #4f46e5; margin-bottom: 10px; font-size: 0.9em; }
         .stat-card span { font-size: 2em; font-weight: bold; color: #1f2937; }
 
+        /* --- Loading & Messages --- */
         .loading { display: none; text-align: center; padding: 20px; }
         .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #4f46e5; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px; }
         .btn .spinner { width: 20px; height: 20px; margin: 0; }
@@ -292,9 +282,10 @@
         .message.error { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
         .message.success { background: #dcfce7; color: #065f46; border: 1px solid #a7f3d0; }
         .message.warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); } }
+        @keyframes slideIn { from { transform: translateY(-50px) translateX(-50%); opacity: 0; } to { transform: translateY(0) translateX(-50%); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px) translateX(-50%); } }
 
+        /* --- Responsive Design --- */
         @media (max-width: 1200px) { .content { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) { body { padding: 10px; } .content { grid-template-columns: 1fr; padding: 20px; } .header h1 { font-size: 2em; } .header p { font-size: 1em; } .controls { flex-direction: column; } .btn { width: 100%; } }
     </style>
@@ -305,7 +296,7 @@
         <div class="header">
             <div class="ai-badge">🤖 AI Powered</div>
             <h1>🚀 محول الأسئلة الذكي المتطور</h1>
-            <p>نظام ذكاء اصطناعي متقدم لتحليل وتحويل الأسئلة</p>
+            <p>حوّل نصوص الأسئلة إلى صيغة JSON متقدمة بضغطة زر</p>
         </div>
 
         <div class="content">
@@ -313,7 +304,13 @@
             <div class="panel">
                 <h3>📝 إدخال الأسئلة</h3>
                 <div class="input-section">
-                    <textarea id="questionInput" placeholder="أدخل الأسئلة هنا..."></textarea>
+                    <textarea id="questionInput" placeholder="أدخل الأسئلة هنا... مثال:
+1. ما هي عاصمة مصر؟
+أ) القاهرة*
+ب) الإسكندرية
+
+2. الشمس تشرق من الغرب. (خطأ)
+"></textarea>
                 </div>
                 <div class="api-key-section">
                      <input type="password" id="apiKey" placeholder="🔑 أدخل مفتاح Gemini API هنا">
@@ -323,7 +320,7 @@
                     <button class="btn btn-ai" id="aiEnhanceBtn" onclick="app.enhanceWithAI()">💎 تحسين بالـ AI</button>
                 </div>
                  <div class="controls">
-                    <button class="btn btn-success" onclick="app.convertToJSON()">🔄 تحويل لـ JSON</button>
+                    <button class="btn btn-success" onclick="app.convertToJSON()">🔄 تحويل لـ JSON متقدم</button>
                     <button class="btn btn-secondary" onclick="app.clearAll()">🗑️ مسح الكل</button>
                 </div>
                 <div class="loading" id="loading">
@@ -332,9 +329,9 @@
                 </div>
             </div>
 
-            <!-- Analysis Panel -->
+            <!-- Analysis & Output Panel -->
             <div class="panel">
-                <h3>🔍 تحليل ذكي</h3>
+                <h3>🔍 تحليل ومخرجات</h3>
                 <div class="analysis-section" id="analysisSection">
                     <div class="analysis-item"><span>جودة الكشف:</span><div class="confidence-bar"><div id="detectionQuality" class="confidence-fill" style="width: 0%"></div></div></div>
                     <div class="analysis-item"><span>دقة التصنيف:</span><div class="confidence-bar"><div id="classificationAccuracy" class="confidence-fill" style="width: 0%"></div></div></div>
@@ -344,14 +341,14 @@
                     <div class="stat-card"><h4>إجمالي الأسئلة</h4><span id="totalQuestions">0</span></div>
                     <div class="stat-card"><h4>اختيار متعدد</h4><span id="multipleChoice">0</span></div>
                     <div class="stat-card"><h4>صح/خطأ</h4><span id="trueFalse">0</span></div>
-                    <div class="stat-card"><h4>ملء الفراغات</h4><span id="fillBlank">0</span></div>
                     <div class="stat-card"><h4>مقالية</h4><span id="essay">0</span></div>
+                    <div class="stat-card"><h4>غير معروف</h4><span id="unknown">0</span></div>
                     <div class="stat-card"><h4>معدل الثقة</h4><span id="confidenceScore">0%</span></div>
                 </div>
                 <div class="json-output" id="jsonOutput" style="display: none;"></div>
-                <div class="controls" style="margin-top: 15px;">
-                    <button class="btn btn-secondary" onclick="app.copyJSON()">📋 نسخ JSON</button>
-                    <button class="btn btn-warning" onclick="app.downloadJSON()">💾 تحميل</button>
+                <div class="controls" style="margin-top: auto;">
+                    <button class="btn btn-secondary" id="copyBtn" onclick="app.copyJSON()" disabled>📋 نسخ JSON</button>
+                    <button class="btn btn-warning" id="downloadBtn" onclick="app.downloadJSON()" disabled>💾 تحميل</button>
                 </div>
             </div>
 
@@ -373,6 +370,7 @@
             constructor() {
                 this.questions = [];
                 this.isAIProcessing = false;
+                this.jsonForExport = '';
                 this.patterns = {
                     multipleChoice: /([أ-ي]\s*[.)-]|^\d+\s*[.)-])/m,
                     trueFalse: /(صح\s*(أم|أو|\/)\s*خطأ|true\s*(or|\/)\s*false)/i,
@@ -394,7 +392,7 @@
                 setTimeout(() => {
                     this.processText(input);
                     this.showLoading(false);
-                }, 1000);
+                }, 500);
             }
 
             async enhanceWithAI() {
@@ -414,24 +412,19 @@
 
                 try {
                     const rawText = document.getElementById('questionInput').value;
-                    const initialJSON = JSON.stringify(this.questions, null, 2);
-
                     const prompt = `
-                        أنت نظام خبير في تحليل وهيكلة أسئلة الاختبارات من النصوص الأولية إلى صيغة JSON دقيقة.
-                        المهمة: قم بتحليل النص الأولي التالي الذي يحتوي على أسئلة. لقد قمت بمحاولة أولية لتحويله إلى JSON، ولكن قد يحتوي على أخطاء (مثل تقسيم خاطئ للأسئلة، تصنيف غير صحيح للنوع، أو بيانات مفقودة).
-                        مهمتك هي تصحيح تحليلي وإرجاع مصفوفة JSON واحدة صالحة تحتوي على جميع كائنات الأسئلة المهيكلة بشكل صحيح.
+                        You are an expert system for structuring test questions from raw text into precise JSON format.
+                        Task: Analyze the following raw text containing questions.
+                        Your job is to correct any errors and return a single, valid JSON array containing all question objects, properly structured.
+                        Each object must have "id", "type", "question", "choices" (if any), "answer" (the index of the correct choice, or the correct text), and a "confidence" score (0.0 to 1.0).
+                        The "type" can be "multiple_choice", "true_false", "essay", "short_answer", "fill_blank", or "matching".
 
-                        النص الأولي:
+                        Raw Text:
                         ---
                         ${rawText}
                         ---
-
-                        تحليلي الأولي (قد يكون خاطئًا):
-                        ---
-                        ${initialJSON}
-                        ---
-
-                        الرجاء إرجاع مصفوفة JSON فقط بدون أي نص أو توضيحات إضافية.
+                        
+                        IMPORTANT: Return ONLY the raw JSON array. Do not include any explanatory text, markdown formatting like \`\`\`json, or anything else. Your entire response must be the JSON array itself.
                     `;
                     
                     const aiResult = await this.callGeminiAPI(prompt, apiKey);
@@ -440,7 +433,7 @@
                         this.questions = aiResult;
                         this.updateUIAfterChange('تم تحسين الأسئلة بنجاح باستخدام الذكاء الاصطناعي!');
                     } else {
-                         this.showMessage('استجاب الذكاء الاصطناعي بصيغة غير متوقعة. الرجاء المحاولة مرة أخرى.', 'error');
+                         this.showMessage('استجاب الذكاء الاصطناعي بصيغة غير متوقعة.', 'error');
                     }
 
                 } catch (error) {
@@ -452,37 +445,99 @@
                 }
             }
 
+            transformToAdvancedFormat(question, index) {
+                const typeMap = {
+                    multiple_choice: 'mcq',
+                    true_false: 'mcq', // True/False is often a type of MCQ
+                    essay: 'essay',
+                    fill_blank: 'fill_blank',
+                    short_answer: 'short_answer',
+                    matching: 'matching',
+                    unknown: 'unknown'
+                };
+
+                const advancedQuestion = {
+                    parts: [{
+                        n: question.id || index + 1,
+                        stem: `<p>${this.escapeHtml(question.question)}</p>`,
+                        type: typeMap[question.type] || 'unknown',
+                        answer: null, // As per the target format example
+                        choices: [],
+                        subtype: null,
+                        standalone: true,
+                        metadata: {
+                            id: Date.now() + index,
+                            title: question.question.substring(0, 50),
+                            automark: true,
+                            category: "lesson",
+                            country: "eg",
+                            language: "ar",
+                            dialect: ["egyptian"],
+                            mapped_id: Date.now() + index,
+                            source_id: { value: question.id || index + 1, page_number: null },
+                            description: question.question,
+                            has_example: true,
+                            parts_count: 1,
+                            instances_count: 1,
+                            publication_date: new Date().toISOString(),
+                            statement: null
+                        }
+                    }]
+                };
+
+                if (question.type === 'multiple_choice' && Array.isArray(question.choices)) {
+                    advancedQuestion.parts[0].choices = question.choices.map((choice, i) => ({
+                        type: (i === question.answer) ? 'key' : 'distractor',
+                        unit: null,
+                        index: i,
+                        values: [],
+                        last_order: false,
+                        fixed_order: i + 1,
+                        html_content: `<span>${this.escapeHtml(choice)}</span>`
+                    }));
+                }
+                
+                return advancedQuestion;
+            }
+            
             convertToJSON() {
                 if (this.questions.length === 0) {
                     this.showMessage('لا توجد أسئلة لتحويلها. الرجاء التحليل أولاً.', 'warning');
                     return;
                 }
+                const advancedFormatQuestions = this.questions.map((q, index) => this.transformToAdvancedFormat(q, index));
                 const jsonOutput = document.getElementById('jsonOutput');
-                const jsonString = JSON.stringify(this.questions, null, 2);
-                jsonOutput.innerHTML = this.syntaxHighlight(jsonString);
+                this.jsonForExport = JSON.stringify(advancedFormatQuestions, null, 2);
+                
+                jsonOutput.innerHTML = this.syntaxHighlight(this.jsonForExport);
                 jsonOutput.style.display = 'block';
-                this.showMessage('تم تحويل الأسئلة إلى JSON بنجاح', 'success');
+                document.getElementById('copyBtn').disabled = false;
+                document.getElementById('downloadBtn').disabled = false;
+                
+                this.showMessage('تم تحويل الأسئلة إلى الصيغة المتقدمة بنجاح', 'success');
             }
 
             clearAll() {
                 document.getElementById('questionInput').value = '';
                 document.getElementById('apiKey').value = '';
                 this.questions = [];
+                this.jsonForExport = '';
                 this.updateUIAfterChange();
-                document.getElementById('jsonOutput').style.display = 'none';
-                document.getElementById('jsonOutput').innerHTML = '';
-                this.resetConfidenceBars();
+                const jsonOutput = document.getElementById('jsonOutput');
+                jsonOutput.style.display = 'none';
+                jsonOutput.innerHTML = '';
+                document.getElementById('copyBtn').disabled = true;
+                document.getElementById('downloadBtn').disabled = true;
                 this.showMessage('تم مسح كل شيء', 'success');
             }
             
             copyJSON() {
-                const jsonText = JSON.stringify(this.questions, null, 2);
-                if (!jsonText || jsonText === '[]') {
+                if (!this.jsonForExport) {
                     this.showMessage('لا يوجد شيء لنسخه', 'warning');
                     return;
                 }
                 const textArea = document.createElement('textarea');
-                textArea.value = jsonText;
+                textArea.value = this.jsonForExport;
                 document.body.appendChild(textArea);
                 textArea.select();
                 try {
@@ -495,16 +550,15 @@
             }
 
             downloadJSON() {
-                const jsonText = JSON.stringify(this.questions, null, 2);
-                 if (!jsonText || jsonText === '[]') {
+                if (!this.jsonForExport) {
                     this.showMessage('لا يوجد شيء لتحميله', 'warning');
                     return;
                 }
-                const blob = new Blob([jsonText], { type: 'application/json' });
+                const blob = new Blob([this.jsonForExport], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'questions.json';
+                a.download = 'advanced_questions.json';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -512,88 +566,7 @@
                 this.showMessage('بدء تحميل الملف...', 'success');
             }
 
-            // ===== API Call =====
-            async callGeminiAPI(prompt, apiKey) {
-                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: {
-                        response_mime_type: "application/json",
-                        temperature: 0.3,
-                        maxOutputTokens: 8192
-                    }
-                };
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    const errorBody = await response.json();
-                    throw new Error(errorBody.error?.message || `Request failed with status ${response.status}`);
-                }
-                const data = await response.json();
-                console.log('Raw API Response:', data);
-                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
-                    throw new Error('لم يتم الحصول على استجابة صحيحة من API');
-                }
-                let jsonText = data.candidates[0].content.parts[0].text;
-                jsonText = jsonText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-                // محاولة استخراج أول مصفوفة JSON من النص حتى لو كان هناك نص إضافي
-                let extracted = null;
-                try {
-                    // ابحث عن أول مصفوفة JSON
-                    const arrayMatch = jsonText.match(/\[([\s\S]*?)\]/);
-                    if (arrayMatch) {
-                        extracted = JSON.parse('[' + arrayMatch[1] + ']');
-                    } else {
-                        // ابحث عن أول كائن JSON
-                        const objMatch = jsonText.match(/\{([\s\S]*?)\}/);
-                        if (objMatch) {
-                            extracted = JSON.parse('{' + objMatch[1] + '}');
-                        }
-                    }
-                } catch (e) {
-                    // تجاهل الخطأ هنا، سنحاول التحليل بالطريقة العادية
-                }
-                try {
-                    if (extracted && Array.isArray(extracted)) {
-                        for (let item of extracted) {
-                            if (!item.hasOwnProperty('question') || !item.hasOwnProperty('type')) {
-                                throw new Error('عنصر في المصفوفة لا يحتوي على الخصائص المطلوبة');
-                            }
-                        }
-                        return extracted;
-                    }
-                    const parsed = JSON.parse(jsonText);
-                    if (Array.isArray(parsed)) {
-                        for (let item of parsed) {
-                            if (!item.hasOwnProperty('question') || !item.hasOwnProperty('type')) {
-                                throw new Error('عنصر في المصفوفة لا يحتوي على الخصائص المطلوبة');
-                            }
-                        }
-                        return parsed;
-                    }
-                    if (parsed && typeof parsed === 'object' && Array.isArray(parsed.questions)) {
-                        for (let item of parsed.questions) {
-                            if (!item.hasOwnProperty('question') || !item.hasOwnProperty('type')) {
-                                throw new Error('عنصر في مصفوفة الأسئلة لا يحتوي على الخصائص المطلوبة');
-                            }
-                        }
-                        return parsed.questions;
-                    }
-                    throw new Error('الاستجابة ليست مصفوفة أو كائن يحتوي على أسئلة صالحة');
-                } catch (parseError) {
-                    console.error('خطأ في تحليل JSON:', parseError);
-                    console.error('النص الأصلي:', jsonText);
-                    // عرض الاستجابة الخام للمستخدم
-                    this.showMessage('فشل في تحليل استجابة الذكاء الاصطناعي كـ JSON صحيح.\nيمكنك نسخ الاستجابة الخام من وحدة التحكم (Console) أو إرسالها للمطور.','error');
-                    alert('النص الخام من الذكاء الاصطناعي:\n' + jsonText);
-                    throw new Error('فشل في تحليل استجابة الذكاء الاصطناعي كـ JSON صحيح');
-                }
-            }
-
-            // ===== Editing Logic =====
+            // ===== Editing Logic (from original file) =====
 
             deleteQuestion(id) {
                 const questionIndex = this.questions.findIndex(q => q.id === id);
@@ -608,16 +581,22 @@
                 if (questionIndex > -1 && questionIndex < this.questions.length - 1) {
                     const currentQuestion = this.questions[questionIndex];
                     const nextQuestion = this.questions[questionIndex + 1];
+                    
+                    // Use originalText if available, otherwise fallback to question
                     const mergedText = (currentQuestion.originalText || currentQuestion.question) + '\n\n' + (nextQuestion.originalText || nextQuestion.question);
+                    
+                    // Re-analyze the merged text block
                     const reAnalyzedQuestion = this.analyzeQuestion(mergedText, currentQuestion.id);
-                    reAnalyzedQuestion.originalText = mergedText;
+                    reAnalyzedQuestion.originalText = mergedText; // Store the merged text
+                    
                     this.questions[questionIndex] = reAnalyzedQuestion;
-                    this.questions.splice(questionIndex + 1, 1);
+                    this.questions.splice(questionIndex + 1, 1); // Remove the next question
+                    
                     this.updateUIAfterChange('تم دمج السؤالين بنجاح');
                 }
             }
 
-            // ===== Core Processing =====
+            // ===== Core Processing Logic =====
             
             processText(text) {
                 try {
@@ -627,14 +606,16 @@
                         return;
                     }
                     this.questions = questionBlocks.map((block, index) => this.analyzeQuestion(block, index + 1));
-                    this.updateUIAfterChange('تم التحليل المبدئي بنجاح. يمكنك الآن التحسين باستخدام AI.');
+                    this.updateUIAfterChange('تم التحليل المبدئي بنجاح.');
                 } catch (error) {
                     this.showMessage('حدث خطأ أثناء التحليل: ' + error.message, 'error');
                 }
             }
             
             intelligentQuestionSplitting(text) {
-                return text.split(/(?=\n\s*\d+\s*[.-])|(?=\n\n)/).filter(block => block.trim().length > 5).map(b => b.trim());
+                return text.split(/(?=\n*\s*\d+\s*[.-])|(?=\n\n)/)
+                           .filter(block => block.trim().length > 5)
+                           .map(b => b.trim());
             }
 
             analyzeQuestion(block, id) {
@@ -646,33 +627,25 @@
                     switch (type) {
                         case 'multiple_choice': structure = this.analyzeMultipleChoice(block); confidence = 0.9; break;
                         case 'true_false': structure = this.analyzeTrueFalse(block); confidence = 0.95; break;
-                        case 'fill_blank': structure = this.analyzeFillBlank(block); confidence = 0.85; break;
-                        case 'matching': structure = this.analyzeMatching(block); confidence = 0.75; break;
-                        case 'essay': structure = this.analyzeEssay(block); confidence = 0.8; break;
-                        default: structure = this.analyzeShortAnswer(block); confidence = 0.6;
+                        // Add other types if needed
+                        default: structure = { question: block.replace(/^\d+\s*[.-]\s*/, '').trim(), answer: null }; confidence = 0.6;
                     }
                 } catch {
-                    // In case of parsing error, keep basic structure
                     structure = { question: block, answer: null };
                     confidence = 0.3;
                 }
                 
-                if (structure.question && structure.answer !== undefined) confidence += 0.05;
-                if (type === 'multiple_choice' && structure.choices && structure.choices.length > 1) confidence += 0.05;
-
                 return { id, originalText: block, type, confidence: Math.min(confidence, 1.0), ...structure };
             }
 
             detectQuestionType(text) {
-                if (this.patterns.multipleChoice.test(text)) return 'multiple_choice';
                 if (this.patterns.trueFalse.test(text)) return 'true_false';
-                if (this.patterns.matching.test(text)) return 'matching';
-                if (this.patterns.fillBlank.test(text)) return 'fill_blank';
+                const lines = text.split('\n');
+                if (lines.length > 1 && /^[أ-ي]\s*[.)-]/.test(lines[1].trim())) return 'multiple_choice';
+                if (this.patterns.multipleChoice.test(text)) return 'multiple_choice';
                 if (this.patterns.essay.test(text)) return 'essay';
-                return 'short_answer';
+                return 'unknown';
             }
-
-            // --- Specialized Analysis Functions ---
 
             analyzeMultipleChoice(text) {
                 const lines = text.split('\n').filter(line => line.trim() !== '');
@@ -696,51 +669,14 @@
                 const match = text.match(/\((.*?)\)/);
                 if (match) {
                     const answerText = match[1].trim().toLowerCase();
-                    if (answerText === 'صح' || answerText === 'true') answer = true;
-                    if (answerText === 'خطأ' || answerText === 'false') answer = false;
+                    if (answerText === 'صح' || answerText === 'true') answer = 0;
+                    if (answerText === 'خطأ' || answerText === 'false') answer = 1;
                     question = question.replace(/\(.*?\)/, '').trim();
                 }
                 return { question, choices: ['صح', 'خطأ'], answer };
             }
 
-            analyzeFillBlank(text) {
-                let question = text.replace(/(أكمل|املأ)\s*:/i, '').trim();
-                let answer = null;
-                const match = question.match(/\[(.*?)\]/);
-                if (match) {
-                    answer = match[1];
-                    question = question.replace(/\[.*?\]/, '______');
-                }
-                return { question, answer };
-            }
-            
-            analyzeEssay(text) {
-                return { question: text.replace(/^\d+\s*[.-]\s*/, '').trim(), answer: null };
-            }
-
-            analyzeMatching(text) {
-                const question = text.split('\n')[0];
-                const lists = text.match(/\[(.*?)\]/g);
-                let premises = [], responses = [];
-                if (lists && lists.length >= 2) {
-                    premises = lists[0].replace(/[\[\]]/g, '').split(/[,،]/).map(s => s.trim());
-                    responses = lists[1].replace(/[\[\]]/g, '').split(/[,،]/).map(s => s.trim());
-                }
-                return { question, premises, responses, answer: null };
-            }
-
-            analyzeShortAnswer(text) {
-                let question = text.replace(/^\d+\s*[.-]\s*/, '').trim();
-                let answer = null;
-                const match = question.match(/\((.*?)\)/);
-                if (match) {
-                    answer = match[1].trim();
-                    question = question.replace(/\(.*?\)/, '').trim();
-                }
-                return { question, answer };
-            }
-
-            // ===== UI Update Functions =====
+            // ===== UI Update & Utility Functions =====
 
             updateUIAfterChange(message) {
                 this.questions.forEach((q, index) => { q.id = index + 1; });
@@ -761,7 +697,7 @@
                 const btn = document.getElementById('aiEnhanceBtn');
                 if (isLoading) {
                     btn.disabled = true;
-                    btn.innerHTML = '<div class="spinner"></div> <span>جاري التحسين...</span>';
+                    btn.innerHTML = '<div class="spinner"></div> <span>جاري...</span>';
                 } else {
                     btn.disabled = false;
                     btn.innerHTML = '💎 تحسين بالـ AI';
@@ -778,27 +714,26 @@
             }
             
             updateStatistics() {
-                const counts = { multiple_choice: 0, true_false: 0, fill_blank: 0, essay: 0, matching: 0, short_answer: 0, unknown: 0 };
+                const counts = { multiple_choice: 0, true_false: 0, essay: 0, unknown: 0 };
                 let totalConfidence = 0;
-                this.questions.forEach(q => { counts[q.type] = (counts[q.type] || 0) + 1; totalConfidence += (q.confidence || 0.5); });
+                this.questions.forEach(q => {
+                    counts[q.type] = (counts[q.type] || 0) + 1;
+                    totalConfidence += (q.confidence || 0.5);
+                });
+                
                 const total = this.questions.length;
                 document.getElementById('totalQuestions').textContent = total;
                 document.getElementById('multipleChoice').textContent = counts.multiple_choice;
                 document.getElementById('trueFalse').textContent = counts.true_false;
-                document.getElementById('fillBlank').textContent = counts.fill_blank;
-                document.getElementById('essay').textContent = (counts.essay + counts.matching + counts.short_answer);
+                document.getElementById('essay').textContent = counts.essay;
+                document.getElementById('unknown').textContent = counts.unknown;
+
                 const avgConfidence = total > 0 ? (totalConfidence / total) : 0;
-                document.getElementById('confidenceScore').textContent = `${Math.round(avgConfidence * 100)}%`;
-                document.getElementById('detectionQuality').style.width = `${Math.round(avgConfidence * 100)}%`;
+                const confidencePercent = Math.round(avgConfidence * 100);
+                document.getElementById('confidenceScore').textContent = `${confidencePercent}%`;
+                document.getElementById('detectionQuality').style.width = `${confidencePercent}%`;
                 document.getElementById('classificationAccuracy').style.width = `${Math.round(avgConfidence * 95)}%`;
                 document.getElementById('dataCompleteness').style.width = `${Math.round(avgConfidence * 90)}%`;
-            }
-            
-            resetConfidenceBars() {
-                 document.getElementById('confidenceScore').textContent = '0%';
-                 document.getElementById('detectionQuality').style.width = '0%';
-                 document.getElementById('classificationAccuracy').style.width = '0%';
-                 document.getElementById('dataCompleteness').style.width = '0%';
             }
 
             displayResults() {
@@ -823,12 +758,10 @@
                         <div class="question-type-badge type-${q.type || 'unknown'}">${typeTranslations[q.type] || 'غير معروف'}</div>
                         <h4>${q.id}. ${this.escapeHtml(q.question)}</h4>`;
 
-                    if (q.type === 'multiple_choice' && q.choices) {
+                    if (q.choices) {
                         content += q.choices.map((choice, i) => `<div class="choice-item ${i === q.answer ? 'correct' : ''}">${this.escapeHtml(choice)}</div>`).join('');
-                    } else if (q.type === 'true_false' && q.choices) {
-                         content += q.choices.map((choice, i) => `<div class="choice-item ${ (q.answer === true && i === 0) || (q.answer === false && i === 1) ? 'correct' : ''}">${this.escapeHtml(choice)}</div>`).join('');
                     } else if (q.answer !== null && q.answer !== undefined && q.answer !== '') {
-                        content += `<div class="choice-item correct">الإجابة: ${this.escapeHtml(q.answer)}</div>`;
+                         content += `<div class="choice-item correct">الإجابة: ${this.escapeHtml(q.answer)}</div>`;
                     }
                     questionDiv.innerHTML = content;
                     previewContainer.appendChild(questionDiv);
@@ -849,6 +782,46 @@
                     else if (/null/.test(match)) { cls = 'null'; }
                     return '<span class="' + cls + '">' + match + '</span>';
                 });
+            }
+            
+            async callGeminiAPI(prompt, apiKey) {
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        response_mime_type: "application/json",
+                        temperature: 0.2,
+                        maxOutputTokens: 8192,
+                    }
+                };
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.json();
+                    console.error('API Error Response:', errorBody);
+                    throw new Error(errorBody.error?.message || `فشل الطلب بالحالة ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (!data.candidates || !data.candidates[0].content || !data.candidates[0].content.parts) {
+                    console.error('Invalid API Response Structure:', data);
+                    throw new Error('لم يتم الحصول على استجابة صحيحة من API.');
+                }
+                
+                const jsonText = data.candidates[0].content.parts[0].text;
+                try {
+                    return JSON.parse(jsonText);
+                } catch (e) {
+                    console.error("Failed to parse AI response as JSON:", jsonText);
+                    throw new Error("فشل تحليل استجابة الذكاء الاصطناعي، قد لا تكون بصيغة JSON صحيحة.");
+                }
             }
         }
 
