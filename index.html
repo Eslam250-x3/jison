@@ -515,7 +515,6 @@
             // ===== API Call =====
             async callGeminiAPI(prompt, apiKey) {
                 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-                
                 const payload = {
                     contents: [{ parts: [{ text: prompt }] }],
                     generationConfig: {
@@ -524,33 +523,49 @@
                         maxOutputTokens: 8192
                     }
                 };
-
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
                 if (!response.ok) {
                     const errorBody = await response.json();
                     throw new Error(errorBody.error?.message || `Request failed with status ${response.status}`);
                 }
-
                 const data = await response.json();
-                
                 console.log('Raw API Response:', data);
-                
                 if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts) {
                     throw new Error('لم يتم الحصول على استجابة صحيحة من API');
                 }
-                
                 let jsonText = data.candidates[0].content.parts[0].text;
-                
                 jsonText = jsonText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-                
+                // محاولة استخراج أول مصفوفة JSON من النص حتى لو كان هناك نص إضافي
+                let extracted = null;
                 try {
+                    // ابحث عن أول مصفوفة JSON
+                    const arrayMatch = jsonText.match(/\[([\s\S]*?)\]/);
+                    if (arrayMatch) {
+                        extracted = JSON.parse('[' + arrayMatch[1] + ']');
+                    } else {
+                        // ابحث عن أول كائن JSON
+                        const objMatch = jsonText.match(/\{([\s\S]*?)\}/);
+                        if (objMatch) {
+                            extracted = JSON.parse('{' + objMatch[1] + '}');
+                        }
+                    }
+                } catch (e) {
+                    // تجاهل الخطأ هنا، سنحاول التحليل بالطريقة العادية
+                }
+                try {
+                    if (extracted && Array.isArray(extracted)) {
+                        for (let item of extracted) {
+                            if (!item.hasOwnProperty('question') || !item.hasOwnProperty('type')) {
+                                throw new Error('عنصر في المصفوفة لا يحتوي على الخصائص المطلوبة');
+                            }
+                        }
+                        return extracted;
+                    }
                     const parsed = JSON.parse(jsonText);
-                    
                     if (Array.isArray(parsed)) {
                         for (let item of parsed) {
                             if (!item.hasOwnProperty('question') || !item.hasOwnProperty('type')) {
@@ -559,7 +574,6 @@
                         }
                         return parsed;
                     }
-                    
                     if (parsed && typeof parsed === 'object' && Array.isArray(parsed.questions)) {
                         for (let item of parsed.questions) {
                             if (!item.hasOwnProperty('question') || !item.hasOwnProperty('type')) {
@@ -568,12 +582,13 @@
                         }
                         return parsed.questions;
                     }
-
                     throw new Error('الاستجابة ليست مصفوفة أو كائن يحتوي على أسئلة صالحة');
-
                 } catch (parseError) {
                     console.error('خطأ في تحليل JSON:', parseError);
                     console.error('النص الأصلي:', jsonText);
+                    // عرض الاستجابة الخام للمستخدم
+                    this.showMessage('فشل في تحليل استجابة الذكاء الاصطناعي كـ JSON صحيح.\nيمكنك نسخ الاستجابة الخام من وحدة التحكم (Console) أو إرسالها للمطور.','error');
+                    alert('النص الخام من الذكاء الاصطناعي:\n' + jsonText);
                     throw new Error('فشل في تحليل استجابة الذكاء الاصطناعي كـ JSON صحيح');
                 }
             }
